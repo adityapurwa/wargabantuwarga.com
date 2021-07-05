@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master, feature/fetcher ]
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - run: npm run fetch-wbw
+      - run: npm run build
+
+      - run: cat public/api/id/covid19/stats | jq .numbers
+
+      - run: npm install -g netlify-cli@2.50.0
+      - run: netlify deploy --prod --dir=out
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

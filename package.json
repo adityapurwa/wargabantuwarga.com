@@ -5,16 +5,22 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "fetch-wbw": "node etc/fetchers/fetch-wbw.js",
+    "netlify-build": "yarn fetch-wbw && yarn export"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
     "next": "11.0.1",
+    "node-fetch": "^2.6.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.29",
     "@types/react": "17.0.13",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",
