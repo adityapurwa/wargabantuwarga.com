@@ -21,9 +21,8 @@ jobs:
 
       - run: npm install
       - run: npm run fetch-wbw
-      - run: npm run build
+      - run: npm run netlify-build
 
-      - run: cat public/api/id/covid19/stats | jq .numbers
 
       - run: npm install -g netlify-cli@2.50.0
       - run: netlify deploy --prod --dir=out
